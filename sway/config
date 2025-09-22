@@ -248,7 +248,7 @@ bindsym $mod+i exec --no-startup-id $term -e /usr/bin/yazi
 # a feature-rich and resource firendly replacement for i3status,
 # written in pure Rust.
 bar {
-	font pango: FontAwesome 7, Iosevka 7
+	font pango: FontAwesome 7, JetBrains Mono 7
 	position top
 	status_command /usr/bin/i3status-rs $HOME/.config/i3status-rust/config.toml
 	colors {

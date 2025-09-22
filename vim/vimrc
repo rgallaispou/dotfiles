@@ -35,6 +35,9 @@ Plugin 'preservim/tagbar'
 " Linux kernel coding style
 Plugin 'gregkh/kernel-coding-style'
 
+" Rust support
+" Plugin 'rust-lang/rust.vim'
+
 " Enhance
 Plugin 'tpope/vim-surround'
 

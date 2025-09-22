@@ -19,10 +19,6 @@ font pango:monospace 8
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
 #font pango:DejaVu Sans Mono 8
 
-# Start XDG autostart .desktop files using dex. See also
-# https://wiki.archlinux.org/index.php/XDG_Autostart
-exec --no-startup-id dex --autostart --environment i3
-
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
 
@@ -45,14 +41,13 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec $HOME/.local/bin/i3_shell.sh
+bindsym $mod+Return exec i3-sensible-terminal
 
 # kill focused window
 bindsym $mod+Shift+a kill
 
 # start dmenu (a program launcher)
-# bindsym $mod+d exec --no-startup-id dmenu_run
-bindsym $mod+d exec --no-startup-id "rofi -show drun"
+bindsym $mod+d exec dmenu_run
 
 # There also is i3-dmenu-desktop which only displays applications shipping a
 # .desktop file. It is a wrapper around dmenu, so you need that installed.
@@ -179,13 +174,16 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
+# Locking mechanisms
+set $locker i3lock --color 333333 && sleep 1
+
 # Power management
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
 mode "$mode_system" {
-	bindsym l exec --no-startup-id betterlockscreen -l blur, mode "default"
+	bindsym l exec --no-startup-id $locker, mode "default"
 	bindsym e exec --no-startup-id i3-msg exit, mode "default"
-	bindsym s exec --no-startup-id systemctl suspend, mode "default"
-	bindsym h exec --no-startup-id systemctl hibernate, mode "default"
+	bindsym s exec --no-startup-id $locker && systemctl suspend, mode "default"
+	bindsym h exec --no-startup-id $locker && systemctl hibernate, mode "default"
 	bindsym r exec --no-startup-id systemctl reboot, mode "default"
 	bindsym Shift+s exec --no-startup-id systemctl poweroff -i, mode "default"  
 
@@ -226,14 +224,18 @@ default_border none
 # default_border pixel 1
 default_floating_border pixel 1
 
-exec_always --no-startup-id /usr/bin/i3wsr --config $HOME/.config/i3wsr/config.toml
+workspace $ws1 output DP-2-1
+workspace $ws2 output DP-2-2
+workspace $ws3 output DP-2-3
+
+exec_always --no-startup-id $HOME/.cargo/bin/i3wsr --config $HOME/.config/i3wsr/config.toml
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
 	font pango: FontAwesome 7, Iosevka 7
 	position top
-	status_command /usr/bin/i3status-rs $HOME/.config/i3status-rust/config.toml
+	status_command $HOME/.cargo/bin/i3status-rs $HOME/.config/i3status-rust/config.toml
 	colors {
 		separator #666666
 		background #222222
@@ -249,7 +251,10 @@ bar {
 exec --no-startup-id picom -b
 
 # Set wallpaper
-exec --no-startup-id feh --bg-fill ~/dotfiles/wallpaper/PANB6669.JPG
+exec --no-startup-id feh --bg-fill ~/.config/dotfiles/wallpaper/PANB6669.JPG
+
+# Set default screen configuration
+exec --no-startup-id $HOME/.screenlayout/intern.sh
 
 # Gaps
 for_window [class="^.*"] border pixel 1
@@ -263,12 +268,12 @@ gaps outer 3
 bindsym $mod+b exec --no-startup-id /usr/bin/firefox
 
 # Bind file explorer to $mod+i
-bindsym $mod+i exec --no-startup-id /usr/bin/urxvt -e /usr/bin/ranger
+bindsym $mod+i exec --no-startup-id /usr/bin/alacritty -e /usr/bin/ranger
 
 # Screenshots
-bindsym Print exec --no-startup-id maim "/home/$USER/Images/Screenshot_$(date +%Y%m%d_%H%M%S).png"
-bindsym $mod+Print exec --no-startup-id maim --window $(xdotool getactivewindow) "/home/$USER/Images/Screenshot_$(date +%Y%m%d_%H%M%S).png"
-bindsym Shift+Print exec --no-startup-id maim --select "/home/$USER/Images/Screenshot_$(date +%Y%m%d_%H%M%S).png"
+bindsym Print exec --no-startup-id maim "/local/home/$USER/Images/Screenshot_$(date +%Y%m%d_%H%M%S).png"
+bindsym $mod+Print exec --no-startup-id maim --window $(xdotool getactivewindow) "/local/home/$USER/Images/Screenshot_$(date +%Y%m%d_%H%M%S).png"
+bindsym Shift+Print exec --no-startup-id maim --select "/local/home/$USER/Images/Screenshot_$(date +%Y%m%d_%H%M%S).png"
 
 ## Clipboard Screenshots
 bindsym Ctrl+Print exec --no-startup-id maim | xclip -selection clipboard -t image/png

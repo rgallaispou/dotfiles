@@ -115,3 +115,7 @@ nmap <F3> :TagbarToggle<CR>	" Map F3 to Tagbar
 
 " Colorizer plugin settings
 let g:colorizer_startup = 0	" Don't enable colorizer at startup
+
+" Apply local config for weeklies
+autocmd BufRead,BufNewFile ~/Documents/m33tdcid/* setlocal textwidth=70 filetype=rst
+autocmd BufRead,BufNewFile ~/Documents/os-team/* setlocal textwidth=70 filetype=rst

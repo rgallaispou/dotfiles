@@ -1,6 +1,15 @@
 function num() {
 #        echo "num ibase obase number"
-        echo "obase=$2; ibase=$1; $3" | bc
+
+	input=$3
+
+	# Check if the string starts with "0x" or "Ox" and strip it
+	if [[ $3 == 0x* || $3 == Ox* ]]; then
+		input=${3:2}
+	fi
+
+	# Uppercase the input result
+	echo "obase=$2; ibase=$1; ${input^^}" | bc
 }
 
 

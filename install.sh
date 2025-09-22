@@ -39,6 +39,12 @@ if [ ! -d ${HOME}/.config/sway ]; then
 fi
 ln -snf ${PWD}/sway/config		${HOME}/.config/sway/config
 
+# Make directory if not existing yet
+if [ ! -d ${HOME}/.config/foot ]; then
+	mkdir -p ${HOME}/.config/foot
+fi
+ln -snf ${PWD}/foot/foot.ini		${HOME}/.config/foot/foot.ini
+
 # Install Vim package manager
 if [ ! -d ${HOME}/.vim/bundle/Vundle.vim ]; then
 	git clone git@github.com:VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim

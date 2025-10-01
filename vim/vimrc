@@ -96,10 +96,11 @@ set list
 " Colorscheme differs between GUI and CLI
 if has("gui_running")
 	colors baycomb
+	set guifont=JetBrains
 else
 	" Set consistent bgcolor with Xres file before loading the colorscheme
 	let g:dracula_colorterm = 0
-	colors dracula
+	colors baycomb
 endif
 
 " Handle GUI specific options

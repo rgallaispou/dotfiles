@@ -20,7 +20,8 @@ ln -snf ${PWD}/vim/vimrc 		${HOME}/.vimrc
 #ln -snf ${PWD}/rofi/config.rasi		${HOME}/.config/rofi
 #ln -snf ${PWD}/screenlayout		${HOME}/.screenlayout
 ln -snf ${PWD}/git/gitconfig		${HOME}/.gitconfig
-install -Dm600 msmtp/msmtprc		${HOME}/srv/.msmtprc
+
+install -Dm600 msmtp/msmtprc		${HOME}/.msmtprc
 
 # Make directory if not existing yet
 if [ ! -d ${HOME}/.config/i3status-rust ]; then

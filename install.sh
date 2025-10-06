@@ -64,3 +64,9 @@ if command -v git > /dev/null 2>&1; then
 		wget -O ${HOME}/.git-prompt.sh "${git_base_url}/git-prompt.sh?h=v${git_version}"
 	fi
 fi
+
+# Allow unrestricted access to dmesg
+if [[ $(cat /proc/sys/kernel/dmesg_restrict) -eq 1 ]]; then
+	echo "Allowing unrestricted access to dmesg (needs sudo)"
+	sudo sysctl -w kernel.dmesg_restrict=0
+fi

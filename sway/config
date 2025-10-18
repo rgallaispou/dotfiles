@@ -218,7 +218,6 @@ bindsym $mod+Pause mode "$mode_system"
 bindsym $mod+Shift+Escape mode "$mode_system"
 
 # Default workspace layout
-workspace_layout tabbed
 default_border none
 # default_border pixel 1
 default_floating_border pixel 1

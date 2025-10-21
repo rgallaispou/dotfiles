@@ -1,0 +1,281 @@
+#
+# Starter muttrc file, with just a few suggestions and settings.
+#
+# This file purposely doesn't include hooks, keybinding, macros, colors, etc.
+# Read the manual, explore, and have fun!
+#
+# For exhaustive config options: `man 5 muttrc`
+#
+# Usefull manual sections:
+# Table 2.4. Most common message index keys
+# Table 2.5. Message status flags
+# Table 2.6. Message recipient flags
+# Table 2.7. Most common pager keys
+# Table 2.10. Most common thread mode keys
+
+# TODO
+# Approach 1: Multiple “account profiles”
+#
+# Directory setup
+# ~/.config/mutt/
+#   ├── muttrc
+#   ├── account-personal.rc
+#   ├── account-work.rc
+#   ├── colors.rc
+#   ├── gpg.rc
+#
+# Automatic switch based on which mailbox I'm in
+# folder-hook imaps://imap.gmail.com/ source ~/.mutt/account-personal.rc
+# folder-hook imaps://imap.work.com/ source ~/.mutt/account-work.rc
+#
+# At some point
+# set signature = "~/.mutt/signature-personal"
+#
+# Approach 2: Using send-hook (for aliases only)
+# send-hook . 'set from="you@default.com" realname="Your Default Name" signature="~/.mutt/signature-default"'
+# send-hook "~t work@example.com" 'set from="you@work.com" signature="~/.mutt/signature-work"'
+# send-hook "~t friend@example.net" 'set from="you@gmail.com" signature="~/.mutt/signature-personal"'
+
+
+# --- Identity ---
+#
+set realname = "Raphaël Gallais-Pou"
+set from = "rgallaispou@gmail.com"
+
+# --- Default identity ---
+#source ~/.mutt/account-personal.rc
+
+# If you have another address:
+#alternates "^mutt@example\.com$"
+
+# Or, if you use the entire domain:
+#alternates "@example\.com$"
+#set reverse_name
+
+# --- Example: Gmail over IMAP ---
+#
+set imap_user = "rgallaispou@gmail.com"
+
+# To avoid storing your password in the .muttrc, encrypt password with:
+# gpg --encrypt -o ~/.config/dotfiles/msmtp/rgallaispou@gmail.com.gpg -r rgallaispou@gmail.com -
+#
+# The ending dash is not a typo, rather it causes gpg to use stdin.
+# After running that snippet of code, type in your password, press
+# enter, and press Control-d so gpg can encrypt your password.
+
+# Decrypt password with
+set imap_pass = "`gpg --batch -q --decrypt ~/.config/mutt/rgallaispou@gmail.com.gpg`"
+
+set folder = imaps://imap.gmail.com/
+set spoolfile = "+INBOX"
+unset record                # Gmail auto-stores in "+[Gmail].Sent Mail"
+unset trash                 # Unset, deletion will remove labels
+set postponed = "+[Gmail].Drafts"
+
+set mail_check = 60
+
+# --- Pager settings ---
+#
+ignore *
+unignore From Message-ID Date To Cc Bcc Subject
+
+# When set, the internal-pager will not move to the next message when you are
+# at the end of a message and invoke the <next-page> function. 
+set pager_stop
+
+# Disable the “+” marker is displayed at the beginning of wrapped lines.
+unset markers
+
+# Prefer plain text to html.
+# However, for brain dead clients that bundle attachments inside a
+# multipart/alternative, prefer that alternative.
+alternative_order multipart/mixed multipart/related text/plain
+
+# Consult mime.types for determining types of these attachments
+mime_lookup application/octet-stream
+
+# This requires a ~/.mailcap entry with the copiousoutput flag, such as:
+# text/html; lynx -dump -width ${COLUMNS:-80} %s; nametemplate=%s.html; copiousoutput
+auto_view text/html
+
+# Pager bindings, but prefer native ones
+#bind pager <Down> next-line
+#bind pager <Up>   previous-line
+
+# --- Index settings ---
+#
+set quit = ask-yes
+set sort = threads
+
+# Remember to `mkdir -p ~/.mutt/hcache` first:
+set header_cache= "~/.mutt/hcache"
+
+# --- Sidebar settings ---
+#
+set sidebar_visible = yes
+
+# --- Message composition settings ---
+#
+# Headers will be at the top of the message in the editor
+set edit_headers
+
+# set the best editor
+set editor = "vim"
+
+set mime_type_query_command = "xdg-mime query filetype"
+
+# msmtp is a solid SMTP client.
+# mutt also has built-in SMTP, or you can use an MTA like exim4 or postfix.
+set sendmail = "/usr/bin/msmtp"
+
+# lbdb is a versatile contact query tool.
+# Invoke via ctrl-t in an address prompt
+set query_command = "/usr/bin/lbdbq"
+
+# Choose your fighter
+#source ~/.config/mutt/colors-dracula.rc
+source ~/.config/mutt/colors-gruvbox.rc
+#source ~/.config/mutt/colors-neonwolf.rc
+#source ~/.config/mutt/colors-solarized-dark-256.rc
+
+# --- GnuPG ---
+#
+unset crypt_use_gpgme
+source ~/.config/mutt/gpg.rc
+set pgp_default_key = "0x1234567890ABCDEF"
+
+# Enable and disable encryption, based on whether all message recipient keys
+# can be located by Mutt.
+set crypt_opportunistic_encrypt
+set postpone_encrypt
+
+# ~/.muttrc - basic Mutt configuration
+#
+## --- Mailbox setup ---
+#set folder = ~/Mail
+#set spoolfile = +INBOX
+#set mbox = +archive
+#set record = +sent
+#set postponed = +drafts
+#set trash = +trash
+#
+## --- IMAP / POP / SMTP example (IMAP with SMTP send) ---
+## IMAP
+#set spoolfile = "imaps://imap.example.com/INBOX"
+#
+## SMTP
+#set smtp_url = "smtps://you@example.com@smtp.example.com:465/"
+#set smtp_pass = "yourpassword"
+#
+## --- General behavior ---
+#set move = no                # don't move read messages automatically
+#set confirmappend = no
+#set mark_old = no
+#set timeout = 30
+#
+## --- UI tweaks ---
+#set pager_index_lines = 10
+#set sort = 'reverse-date'
+#set sort_aux = 'last-date-received'
+#set status_on_top = yes
+#set menu_scroll = yes
+#set index_format = "%4C %Z %{%b %d} %-15.15F (%4c) %s"
+
+
+
+## -*- mode: conf -*-
+#
+### Questions ##################################################################
+#
+##??? sort by thread -> new message push thread up
+#
+#
+### Interface ##################################################################
+#
+## set index_format      = '%/nNr/%/T/%/!/%/P/%/Ss/%/*/%/Dd/%/a/  %{%g/%m/%d %H:%M}  %-30.30g  %?M?(%M) ?%s'
+##
+#set index_format      = '%Z  %(%g/%m/%d %H:%M)  %-30.30a  %?M?(%M) ?%s'
+#
+#set to_chars          = "-XTCFL"
+#set pager_index_lines = 4
+#set sort              = date-received
+#set thread_received   = yes
+#set mark_old          = no
+#set delete_untag      = no
+#set followup_to	      = no
+#
+#bind index F flag-message
+#bind pager F flag-message
+#
+#alternative_order text/calendar text/plain text/enriched text/html
+#
+#
+### Automation #################################################################
+#
+#macro index <f2> '<limit>~A<enter><sort-mailbox>r'
+#macro index <f3> '<sort-mailbox>t<limit>~(~N|~O|~F)<enter><collapse-all>'
+#macro index <f4> '<limit>~A<enter><sort-mailbox>t'
+#macro index,pager \cb "<pipe-message> urlscan<Enter>" "call urlscan to extract URLs out of a message"
+#macro attach,compose \cb "<pipe-entry> urlscan<Enter>" "call urlscan to extract URLs out of a message"
+#
+#
+### Attachments ################################################################
+#
+#color attachment black red
+#
+#attachments   +A */.*
+#attachments   -A text/x-vcard application/pgp.*
+#attachments   -A application/x-pkcs7-.*
+#
+## auto_view application/pdf
+#auto_view text/html
+#auto_view text/calendar
+#
+#
+### Receive ####################################################################
+### Received via offlineimap
+#
+#set folder	= "/local/Maildir/<pro_email>"
+#set spoolfile	= "+INBOX"
+#set trash	= "+Trash"
+#set header_cache	= "~/.mutt/cache/headers"
+#set message_cachedir	= "~/.mutt/cache/bodies"
+#set postponed  = "+Drafts"
+#
+#
+### Send #######################################################################
+#
+#set smtp_url  = "smtp://<user>@<smtp_server>:<port>"
+##set smtp_pass = "XXX"
+#set record    = "$spoolfile"
+#
+#set mime_forward      = yes
+#set mime_forward_rest = yes
+#
+#my_hdr X-Disclaimer: ce message est personnel / this message is private
+#
+#set user_agent = no
+#
+### SSL ########################################################################
+#
+#set ssl_starttls = yes
+#set certificate_file=~/.mutt_certificates
+#
+## Save sent mails unencrypted.
+#set fcc_clear = yes
+#
+#
+### Convenience ################################################################
+#
+## reply-hook . 'reset reply-to'
+## reply-hook "~e . !~l" 'set reply_to xxx'
+#set query_command = "lbdbq '%s'"
+#
+#
+### Lists ######################################################################
+#
+#subscribe '.*@vger.kernel.org$'
+#
+### Color emails ###############################################################
+#set my_pattern = "color index none green default '~C <pro_email>'"
+#folder-hook .      $my_pattern

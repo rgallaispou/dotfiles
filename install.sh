@@ -21,6 +21,19 @@ ln -snf ${PWD}/vim/vimrc 		${HOME}/.vimrc
 #ln -snf ${PWD}/screenlayout		${HOME}/.screenlayout
 ln -snf ${PWD}/git/gitconfig		${HOME}/.gitconfig
 
+# Make directory if not existing yet
+if [ ! -d ${HOME}/.config/mutt ]; then
+	mkdir -p ${HOME}/.config/mutt
+	mkdir -p ${HOME}/.mutt/hcache
+fi
+ln -snf ${PWD}/mutt/muttrc	${HOME}/.config/mutt/muttrc
+ln -snf ${PWD}/mutt/colors-dracula.rc	${HOME}/.config/mutt/colors-dracula.rc
+ln -snf ${PWD}/mutt/colors-gruvbox.rc	${HOME}/.config/mutt/colors-gruvbox.rc
+ln -snf ${PWD}/mutt/colors-neonwolf.rc	${HOME}/.config/mutt/colors-neonwolf.rc
+ln -snf ${PWD}/mutt/colors-solarized-dark-256.rc	${HOME}/.config/mutt/colors-solarized-dark-256.rc
+ln -snf ${PWD}/mutt/gpg.rc	${HOME}/.config/mutt/gpg.rc
+
+# SMTP cannot be link and needs special permissions
 install -Dm600 msmtp/msmtprc		${HOME}/.msmtprc
 
 # Make directory if not existing yet

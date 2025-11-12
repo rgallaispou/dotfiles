@@ -45,7 +45,7 @@ Plugin 'tpope/vim-surround'
 Plugin 'raimondi/delimitmate'
 
 " LangServ will this work one day ?
-"Plugin 'dense-analysis/ale'
+Plugin 'dense-analysis/ale'
 
 " Color schemes
 Plugin 'baycomb'
@@ -119,6 +119,19 @@ nmap <F3> :TagbarToggle<CR>	" Map F3 to Tagbar
 
 " Colorizer plugin settings
 let g:colorizer_startup = 0	" Don't enable colorizer at startup
+
+" ALE plugin settings
+nmap <F5> :ALEToggle<CR>	" Map F5 to ALE
+let g:ale_close_preview_on_insert = 1
+" Enable completion where available.
+" This setting must be set before ALE is loaded.
+let g:ale_completion_enabled = 1
+" Disable ALE at startup
+let g:ale_enabled = 0
+let g:ale_floating_preview = 1
+let g:ale_floating_window_border = ['│', '─', '╭', '╮', '╯', '╰', '│', '─']
+" <C-x><C-o> in insert mode to use completion
+set omnifunc=ale#completion#OmniFunc
 
 " Apply local config for weeklies
 autocmd BufRead,BufNewFile ~/Documents/m33tdcid/* setlocal textwidth=70 filetype=rst

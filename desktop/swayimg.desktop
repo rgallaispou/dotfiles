@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Swayimg
+GenericName=Image Viewer
+Comment=Fast and minimalistic image viewer for Wayland
+Exec=swayimg %F
+Terminal=false
+Type=Application
+MimeType=image/jpeg;image/png;image/gif;image/webp;image/bmp;image/tiff;image/svg+xml;
+Icon=swayimg
+Categories=Graphics;Viewer;
+StartupNotify=false

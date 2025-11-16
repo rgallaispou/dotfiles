@@ -72,6 +72,14 @@ unset record                # Gmail auto-stores in "+[Gmail].Sent Mail"
 unset trash                 # Unset, deletion will remove labels
 set postponed = "+[Gmail].Drafts"
 
+mailboxes = +INBOX
+mailboxes = "+[Gmail].Buildroot"
+mailboxes = "+[Gmail].dri-devel"
+mailboxes = "+[Gmail].Linux-arm"
+mailboxes = "+[Gmail].Linux-stm32"
+mailboxes = "+[Gmail].Uboot-stm32"
+
+
 set mail_check = 60
 
 # --- Pager settings ---
@@ -99,8 +107,8 @@ mime_lookup application/octet-stream
 auto_view text/html
 
 # Pager bindings, but prefer native ones
-#bind pager <Down> next-line
-#bind pager <Up>   previous-line
+bind pager <Down> next-line
+bind pager <Up>   previous-line
 
 # --- Index settings ---
 #
@@ -110,9 +118,13 @@ set sort = threads
 # Remember to `mkdir -p ~/.mutt/hcache` first:
 set header_cache= "~/.mutt/hcache"
 
+# Index bindings, but prefer native ones
+bind index <Space> collapse-thread
+
 # --- Sidebar settings ---
 #
 set sidebar_visible = yes
+set sidebar_folder_indent = yes
 
 # --- Message composition settings ---
 #

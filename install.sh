@@ -60,6 +60,12 @@ if [ ! -d ${HOME}/.config/foot ]; then
 fi
 ln -snf ${PWD}/foot/foot.ini		${HOME}/.config/foot/foot.ini
 
+# Make directory if not existing yet
+if [ ! -d ${HOME}/.config/yazi ]; then
+	mkdir -p ${HOME}/.config/yazi
+fi
+ln -snf ${PWD}/yazi/yazi.toml	${HOME}/.config/yazi/yazi.toml
+
 # Install Vim package manager
 if [ ! -d ${HOME}/.vim/bundle/Vundle.vim ]; then
 	git clone git@github.com:VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim

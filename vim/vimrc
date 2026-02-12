@@ -95,12 +95,10 @@ set list
 
 " Colorscheme differs between GUI and CLI
 if has("gui_running")
-	colors baycomb
+	colors desert
 	set guifont=JetBrains\ Mono\ 12
 else
-	" Set consistent bgcolor with Xres file before loading the colorscheme
-	let g:dracula_colorterm = 0
-	colors baycomb
+	colors default
 endif
 
 " Handle GUI specific options
@@ -132,7 +130,7 @@ let g:ale_floating_preview = 1
 let g:ale_floating_window_border = ['│', '─', '╭', '╮', '╯', '╰', '│', '─']
 " <C-x><C-o> in insert mode to use completion
 set omnifunc=ale#completion#OmniFunc
+" Overwrite default gd behavior
 
 " Apply local config for weeklies
-autocmd BufRead,BufNewFile ~/Documents/m33tdcid/* setlocal textwidth=70 filetype=rst
-autocmd BufRead,BufNewFile ~/Documents/os-team/* setlocal textwidth=70 filetype=rst
+autocmd BufRead,BufNewFile ~/Documents/oss-admin/* setlocal textwidth=70 filetype=rst

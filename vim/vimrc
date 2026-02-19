@@ -131,6 +131,4 @@ let g:ale_floating_window_border = ['│', '─', '╭', '╮', '╯', '╰', '�
 " <C-x><C-o> in insert mode to use completion
 set omnifunc=ale#completion#OmniFunc
 " Overwrite default gd behavior
-
-" Apply local config for weeklies
-autocmd BufRead,BufNewFile ~/Documents/oss-admin/* setlocal textwidth=70 filetype=rst
+map gd :ALEGoToDefinition<CR>	" Map standard go to implementation

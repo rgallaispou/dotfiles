@@ -22,6 +22,7 @@ shopt -s histappend
 # See bash(1) for more options
 HISTFILE=~/.bash_history
 HISTCONTROL=ignoreboth:erasedups # don't put duplicate lines or lines starting with space in the history
+HISTSIZE=-1 # Unlimited history size
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
